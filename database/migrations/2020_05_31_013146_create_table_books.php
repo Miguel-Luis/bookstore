@@ -17,7 +17,9 @@ class CreateTableBooks extends Migration
             $table->id();
             $table->string('book_name');
             $table->string('book_author');
+            $table->string('book_description', 2500);
             $table->bigInteger('book_type')->unsigned();
+            $table->string('book_image');
             $table->timestamps();
 
             $table->foreign('book_type')->references('id')->on('categories');
