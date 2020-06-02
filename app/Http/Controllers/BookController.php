@@ -16,8 +16,9 @@ class BookController extends Controller
     public function index()
     {
         $book = DB::table('categories')
-                ->select('books.book_name', 'books.book_author', 'books.book_description', 'categories.name', 'books.book_image')
-                ->join('books', 'categories.id', 'books.book_type')
+                ->select('books.id', 'books.book_name', 'books.book_author', 'books.book_description', 'categories.name', 'books.book_image')
+                ->join('books', 'categories.id', 'books.category_id')
+                ->orderBy('books.book_name')
                 ->get();
 
         return view('book.index', [
@@ -52,9 +53,17 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Book $book)
     {
-        //
+        $book = DB::table('categories')
+                ->select('books.book_name', 'books.book_author', 'books.book_description', 'categories.name', 'categories.id', 'books.book_image')
+                ->join('books', 'categories.id', 'books.category_id')
+                ->where('books.id', '=', $book->id)
+                ->get();
+
+        return view('book.show', [
+            'book' => $book
+        ]);
     }
 
     /**

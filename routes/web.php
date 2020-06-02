@@ -13,4 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('/', 'BookController');
+Route::get('/', 'BookController@index');
+
+Route::get('/book/{book}', 'BookController@show');
+
+Route::resource('/category', 'CategoriesController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
